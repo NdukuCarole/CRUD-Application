@@ -1,0 +1,169 @@
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>STUDENT APPLICATION</title>
+  <link href="/assets/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+  <div class="container">
+    <h2>Students</h2>
+		<button class="btn btn-success" data-toggle="modal" data-target="#myModalAdd">Add New</button>
+    <table class="table table-striped" id="mytable">
+      <thead>
+        <tr>
+          <th>Student ID</th>
+          <th> Name</th>
+          <th>RegNo</th>
+          <th>Age</th>
+          <th>Class</th>
+        </tr>
+      </thead>
+      <tbody>
+         {{#each results}}
+        <tr>
+          <td>{{ StdID }}</td>
+          <td>{{ Name }}</td>
+          <td>{{ RegNo }}</td>
+          <td>{{ Age}}</td>
+          <td>{{ Class }}</td>
+          <td>
+            <a href="javascript:void(0);" class="btn btn-sm btn-info edit" data-id="{{ StdID }}" data-Name="{{ Name }}" data-RegNo="{{ RegNo }}" data-Age="{{ Age }}" data-Class="{{ Class }}">Edit</a>
+            <a href="javascript:void(0);" class="btn btn-sm btn-danger delete" data-id="{{ StdID }}">Delete</a>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+	<!-- Add New Student Modal-->
+	  <form action="/save" method="post">
+        <div class="modal fade" id="myModalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+           <div class="modal-content">
+             <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel">Add New Student</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+             </div>
+             <div class="modal-body">
+               <div class="form-group">
+                   <input type="text" name="Name" class="form-control" placeholder="Name" required>
+               </div>
+
+               <div class="form-group">
+                   <input type="text" name="RegNo" class="form-control" placeholder="RegNo" required>
+               </div>
+
+               <div class="form-group">
+                   <input type="text" name="Age" class="form-control" placeholder="Age" required>
+               </div>
+
+               <div class="form-group">
+                   <input type="text" name="Class" class="form-control" placeholder="Class" required>
+               </div>
+
+             </div>
+             <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-primary">Save</button>
+             </div>
+           </div>
+         </div>
+        </div>
+	 </form>
+
+	 <!-- Edit Student details-->
+   <form action="/update" method="post">
+       <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Edit Student</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                  <input type="text" name="Name" class="form-control Name" placeholder="Student Name" required>
+              </div>
+
+              <div class="form-group">
+                  <input type="text" name="RegNo" class="form-control RegNo" placeholder="Reg No" required>
+              </div>
+
+              <div class="form-group">
+                  <input type="text" name="Age" class="form-control Age" placeholder="Age" required>
+              </div>
+
+              <div class="form-group">
+                  <input type="text" name="Class" class="form-control class" placeholder="Class" required>
+              </div>
+
+
+            </div>
+            <div class="modal-footer">
+              <input type="hidden" name="id" class="StdID">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+          </div>
+        </div>
+       </div>
+  </form>
+
+	 <!-- Delete Student-->
+ 	  <form id="add-row-form" action="/delete" method="post">
+ 	     <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+ 	        <div class="modal-dialog">
+ 	           <div class="modal-content">
+ 	               <div class="modal-header">
+									 	<h5 class="modal-title" id="myModalLabel">Delete Student</h5>
+ 	                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+ 	               </div>
+ 	               <div class="modal-body">
+												 <strong>Are You Sure To Delete This Data?</strong>
+ 	               </div>
+ 	               <div class="modal-footer">
+									 		<input type="hidden" name="StdID" class="form-control StdID2" required>
+ 	                   	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+ 	                  	<button type="submit" class="btn btn-success">Delete</button>
+ 	               </div>
+ 	      			</div>
+ 	        </div>
+ 	     </div>
+ 	 </form>
+
+<script src="/assets/js/jquery-3.3.1.js"></script>
+<script src="/assets/js/bootstrap.js"></script>
+<script>
+    $(document).ready(function(){
+			//showing data to modal for edit record
+      $('#mytable').on('click','.edit',function(){
+        var StdID = $(this).data('id');
+        var Name = $(this).data('Name');
+        var RegNo = $(this).data('RegNo');
+        var Age = $(this).data('Age');
+        var Class = $(this).data('Class');
+
+
+        $('#EditModal').modal('show');
+        $('.Class').val(Class);
+        $('.Age').val(Age);
+        $('.RegNo').val(RegNo);
+        $('.Name').val(Name);
+        $('.StdID').val(StdID);
+      });
+			//showing modal for delete record
+			$('#mytable').on('click','.delete',function(){
+        var StdID = $(this).data('id');
+        $('#DeleteModal').modal('show');
+        $('.stdID2').val(StdID);
+      });
+
+    });
+</script>
+</body>
+</html>
