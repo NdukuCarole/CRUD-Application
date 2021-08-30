@@ -3,7 +3,9 @@
 
 <h2><b>How it works</h2><br>
 Download bootstrap and jquery from their official websites.<br>
+  
   Create a database student and Table .(Use the database file on the repository)
+  
   Install all dependecies
   
  1. Express (node.js framework)
@@ -47,7 +49,7 @@ Checkout into the master branch using
   
   ```
      
-     <h2><b>The Result</h2><br>
+ <h2><b>The Result</h2><br>
        
        
 
