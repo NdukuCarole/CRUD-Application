@@ -1,0 +1,2 @@
+Download mysql workbench
+Text Editor of your choice
